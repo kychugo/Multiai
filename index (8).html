@@ -1,0 +1,1744 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enhanced Multi-Subject AI Learning Platform</title>
+    <link rel="icon" sizes="192x192" href="https://hugo_wong.pyscriptapps.com/ict-ai-v4-3/latest/logo.jpg">
+    
+    <!-- External Libraries -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            font-family: 'Inter', 'Segoe UI', 'Microsoft JhengHei', Arial, sans-serif;
+        }
+
+        /* Custom animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.5;
+            }
+        }
+
+        @keyframes shimmer {
+            0% {
+                background-position: -468px 0;
+            }
+            100% {
+                background-position: 468px 0;
+            }
+        }
+
+        .animate-fadeInUp {
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        .animate-slideInRight {
+            animation: slideInRight 0.4s ease-out;
+        }
+
+        .animate-pulse-slow {
+            animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+
+        .shimmer {
+            background: linear-gradient(to right, #f6f7f8 0%, #edeef1 20%, #f6f7f8 40%, #f6f7f8 100%);
+            background-size: 800px 104px;
+            animation: shimmer 1.5s linear infinite;
+        }
+
+        /* Custom scrollbar */
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #c1c1c1;
+            border-radius: 10px;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #a8a8a8;
+        }
+
+        /* Dark mode scrollbar */
+        .dark .custom-scrollbar::-webkit-scrollbar-track {
+            background: #374151;
+        }
+
+        .dark .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #6b7280;
+        }
+
+        .dark .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #9ca3af;
+        }
+
+        /* Glass morphism effect */
+        .glass {
+            background: rgba(255, 255, 255, 0.25);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+        }
+
+        .dark .glass {
+            background: rgba(0, 0, 0, 0.25);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Message bubbles */
+        .message-bubble {
+            position: relative;
+            max-width: 80%;
+            word-wrap: break-word;
+            animation: slideInRight 0.3s ease-out;
+        }
+
+        .message-bubble::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 0;
+        }
+
+        .user-bubble::after {
+            bottom: 0;
+            right: -8px;
+            border-left: 8px solid #3b82f6;
+            border-bottom: 8px solid transparent;
+        }
+
+        .ai-bubble::after {
+            bottom: 0;
+            left: -8px;
+            border-right: 8px solid #f3f4f6;
+            border-bottom: 8px solid transparent;
+        }
+
+        .dark .ai-bubble::after {
+            border-right-color: #374151;
+        }
+
+        /* Loading dots */
+        .loading-dots {
+            display: inline-flex;
+            align-items: center;
+            gap: 2px;
+        }
+
+        .loading-dots span {
+            height: 4px;
+            width: 4px;
+            background-color: currentColor;
+            border-radius: 50%;
+            animation: pulse 1.4s ease-in-out infinite both;
+        }
+
+        .loading-dots span:nth-child(1) { animation-delay: -0.32s; }
+        .loading-dots span:nth-child(2) { animation-delay: -0.16s; }
+
+        /* Enhanced focus styles */
+        .focus-ring:focus {
+            outline: none;
+            ring: 2px;
+            ring-color: #3b82f6;
+            ring-offset: 2px;
+        }
+
+        /* Mobile optimizations */
+        @media (max-width: 768px) {
+            .message-bubble {
+                max-width: 90%;
+            }
+        }
+
+        /* Print styles */
+         {
+            .no-print {
+                display: none !important;
+            }
+        }
+
+        /* Custom button styles */
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #5a6fd8 0%, #6a4190 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Subject card hover effects */
+        .subject-card {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .subject-card:hover {
+            transform: translateY(-8px) scale(1.02);
+        }
+
+        /* Status indicator */
+        .status-online {
+            position: relative;
+        }
+
+        .status-online::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            right: -2px;
+            width: 12px;
+            height: 12px;
+            background: #10b981;
+            border-radius: 50%;
+            border: 2px solid white;
+        }
+
+        /* Dark mode enhancements */
+        .dark {
+            color-scheme: dark;
+        }
+
+        /* Accessibility improvements */
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
+
+        /* High contrast mode support */
+        @media (prefers-contrast: high) {
+            .bg-gradient-to-br {
+                background: #000 !important;
+                color: #fff !important;
+            }
+            
+            .text-gray-600 {
+                color: #fff !important;
+            }
+        }
+
+        /* Reduced motion support */
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+    </style>
+</head>
+<body class="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-purple-900 transition-all duration-300">
+    <!-- Authentication Screen -->
+    <div class="container mx-auto px-4 py-8" id="authScreen">
+        <div class="max-w-md mx-auto bg-white dark:bg-gray-800 rounded-2xl shadow-2xl p-8 animate-fadeInUp">
+            <div class="text-center mb-8">
+                <div class="relative inline-block">
+                    <img src="https://hugo_wong.pyscriptapps.com/ict-ai-v4-3/latest/logo.jpg" 
+                         alt="Platform Logo" 
+                         class="w-20 h-20 mx-auto rounded-2xl shadow-lg status-online">
+                    <span class="sr-only">AI Learning Platform Logo</span>
+                </div>
+                <h1 class="text-3xl font-bold text-gray-900 dark:text-white mt-6 mb-2">
+                    <i class="fas fa-brain text-purple-600 mr-2"></i>
+                    AI Learning Hub
+                </h1>
+                <p class="text-gray-600 dark:text-gray-300">Your intelligent study companion</p>
+            </div>
+            
+            <form class="space-y-6" role="form" aria-label="Authentication form">
+                <div>
+                    <label for="email" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                        <i class="fas fa-envelope mr-2"></i>Email Address
+                    </label>
+                    <input type="email" 
+                           id="email" 
+                           placeholder="Enter your email" 
+                           required
+                           aria-required="true"
+                           class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent outline-none transition-all duration-200 bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400">
+                </div>
+                
+                <div>
+                    <label for="password" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                        <i class="fas fa-lock mr-2"></i>Password
+                    </label>
+                    <input type="password" 
+                           id="password" 
+                           placeholder="Enter your password" 
+                           required
+                           aria-required="true"
+                           class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent outline-none transition-all duration-200 bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400">
+                </div>
+                
+                <div class="space-y-3">
+                    <button type="button" 
+                            id="sign-in-button"
+                            class="w-full btn-primary text-white font-semibold py-3 px-6 rounded-xl focus:ring-4 focus:ring-purple-300 outline-none transition-all duration-200">
+                        <i class="fas fa-sign-in-alt mr-2"></i>Sign In
+                    </button>
+                    <button type="button" 
+                            id="register-button"
+                            class="w-full bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-800 dark:text-gray-200 font-semibold py-3 px-6 rounded-xl focus:ring-4 focus:ring-gray-300 outline-none transition-all duration-200">
+                        <i class="fas fa-user-plus mr-2"></i>Create Account
+                    </button>
+                </div>
+            </form>
+            
+            <div id="auth-error" 
+                 class="mt-4 p-3 bg-red-50 dark:bg-red-900 border border-red-200 dark:border-red-700 rounded-xl text-red-700 dark:text-red-300 text-sm hidden"
+                 role="alert"
+                 aria-live="polite">
+            </div>
+            
+            <footer class="text-center text-xs text-gray-500 dark:text-gray-400 mt-8 pt-6 border-t border-gray-200 dark:border-gray-700">
+                <p>Designed by Hugo Wong</p>
+                <p>Copyright © 2025 Wong. All rights reserved.</p>
+            </footer>
+        </div>
+    </div>
+
+    <!-- Cover Page (Subject List) -->
+    <div class="container mx-auto px-4 py-8 hidden" id="coverScreen">
+        <div class="max-w-6xl mx-auto">
+            <!-- Header with controls -->
+            <div class="flex justify-between items-center mb-8 no-print">
+                <button id="theme-toggle" 
+                        class="p-3 bg-white dark:bg-gray-800 rounded-xl shadow-lg hover:shadow-xl transition-all duration-200 text-gray-600 dark:text-gray-300"
+                        aria-label="Toggle dark mode">
+                    <i class="fas fa-moon dark:hidden"></i>
+                    <i class="fas fa-sun hidden dark:block"></i>
+                </button>
+                <button id="sign-out-button" 
+                        class="px-4 py-2 bg-red-500 hover:bg-red-600 text-white rounded-xl transition-all duration-200 font-medium"
+                        aria-label="Sign out">
+                    <i class="fas fa-sign-out-alt mr-2"></i>Sign Out
+                </button>
+            </div>
+            
+            <!-- Main content -->
+            <div class="text-center mb-12 animate-fadeInUp">
+                <div class="relative inline-block mb-6">
+                    <img src="https://hugo_wong.pyscriptapps.com/ict-ai-v4-3/latest/logo.jpg" 
+                         alt="Platform Logo" 
+                         class="w-24 h-24 mx-auto rounded-2xl shadow-xl status-online">
+                </div>
+                <h1 class="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4">
+                    Choose Your Subject
+                </h1>
+                <p class="text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
+                    Explore our AI-powered learning tools designed specifically for Hong Kong DSE students
+                </p>
+            </div>
+            
+            <!-- Subject Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+                <div class="subject-card bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-xl hover:shadow-2xl cursor-pointer group" 
+                     onclick="showAIList('English')"
+                     role="button"
+                     tabindex="0"
+                     aria-label="English subject">
+                    <div class="text-center">
+                        <div class="w-16 h-16 bg-gradient-to-br from-blue-400 to-blue-600 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300">
+                            <i class="fas fa-book-open text-2xl text-white"></i>
+                        </div>
+                        <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-2">English</h2>
+                        <p class="text-gray-600 dark:text-gray-300">Language arts, literature, and composition</p>
+                        <div class="mt-4 flex justify-center">
+                            <span class="px-3 py-1 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 rounded-full text-sm">
+                                5 AI Tools
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="subject-card bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-xl hover:shadow-2xl cursor-pointer group" 
+                     onclick="showAIList('Math')"
+                     role="button"
+                     tabindex="0"
+                     aria-label="Mathematics subject">
+                    <div class="text-center">
+                        <div class="w-16 h-16 bg-gradient-to-br from-green-400 to-green-600 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300">
+                            <i class="fas fa-calculator text-2xl text-white"></i>
+                        </div>
+                        <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-2">Math</h2>
+                        <p class="text-gray-600 dark:text-gray-300">Algebra, geometry, calculus, and statistics</p>
+                        <div class="mt-4 flex justify-center">
+                            <span class="px-3 py-1 bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 rounded-full text-sm">
+                                3 AI Tools
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="subject-card bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-xl hover:shadow-2xl cursor-pointer group" 
+                     onclick="showAIList('Physics')"
+                     role="button"
+                     tabindex="0"
+                     aria-label="Physics subject">
+                    <div class="text-center">
+                        <div class="w-16 h-16 bg-gradient-to-br from-purple-400 to-purple-600 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300">
+                            <i class="fas fa-atom text-2xl text-white"></i>
+                        </div>
+                        <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-2">Physics</h2>
+                        <p class="text-gray-600 dark:text-gray-300">Mechanics, electricity, waves, and modern physics</p>
+                        <div class="mt-4 flex justify-center">
+                            <span class="px-3 py-1 bg-purple-100 dark:bg-purple-900 text-purple-800 dark:text-purple-200 rounded-full text-sm">
+                                3 AI Tools
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="subject-card bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-xl hover:shadow-2xl cursor-pointer group" 
+                     onclick="showAIList('Biology')"
+                     role="button"
+                     tabindex="0"
+                     aria-label="Biology subject">
+                    <div class="text-center">
+                        <div class="w-16 h-16 bg-gradient-to-br from-emerald-400 to-emerald-600 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300">
+                            <i class="fas fa-dna text-2xl text-white"></i>
+                        </div>
+                        <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-2">Biology</h2>
+                        <p class="text-gray-600 dark:text-gray-300">Cell biology, genetics, ecology, and physiology</p>
+                        <div class="mt-4 flex justify-center">
+                            <span class="px-3 py-1 bg-emerald-100 dark:bg-emerald-900 text-emerald-800 dark:text-emerald-200 rounded-full text-sm">
+                                3 AI Tools
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="subject-card bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-xl hover:shadow-2xl cursor-pointer group" 
+                     onclick="showAIList('ICT')"
+                     role="button"
+                     tabindex="0"
+                     aria-label="ICT subject">
+                    <div class="text-center">
+                        <div class="w-16 h-16 bg-gradient-to-br from-indigo-400 to-indigo-600 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300">
+                            <i class="fas fa-laptop-code text-2xl text-white"></i>
+                        </div>
+                        <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-2">ICT</h2>
+                        <p class="text-gray-600 dark:text-gray-300">Programming, networking, databases, and cybersecurity</p>
+                        <div class="mt-4 flex justify-center">
+                            <span class="px-3 py-1 bg-indigo-100 dark:bg-indigo-900 text-indigo-800 dark:text-indigo-200 rounded-full text-sm">
+                                3 AI Tools
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <footer class="text-center text-sm text-gray-500 dark:text-gray-400 mt-12 pt-8 border-t border-gray-200 dark:border-gray-700">
+                <p class="mb-2">Designed by Hugo Wong</p>
+                <p>Copyright © 2025 Wong. All rights reserved.</p>
+            </footer>
+        </div>
+    </div>
+
+    <!-- Subject AI List Page -->
+    <div class="container mx-auto px-4 py-8 hidden" id="aiListScreen">
+        <div class="max-w-4xl mx-auto">
+            <!-- Header with navigation -->
+            <div class="flex justify-between items-center mb-8 no-print">
+                <button onclick="showCover()" 
+                        class="flex items-center px-4 py-2 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 rounded-xl transition-all duration-200"
+                        aria-label="Back to subjects">
+                    <i class="fas fa-arrow-left mr-2"></i>Back to Subjects
+                </button>
+                <div class="flex space-x-3">
+                    <button id="theme-toggle-ai-list" 
+                            class="p-3 bg-white dark:bg-gray-800 rounded-xl shadow-lg hover:shadow-xl transition-all duration-200 text-gray-600 dark:text-gray-300"
+                            aria-label="Toggle dark mode">
+                        <i class="fas fa-moon dark:hidden"></i>
+                        <i class="fas fa-sun hidden dark:block"></i>
+                    </button>
+                    <button id="sign-out-button-ai-list" 
+                            class="px-4 py-2 bg-red-500 hover:bg-red-600 text-white rounded-xl transition-all duration-200 font-medium"
+                            aria-label="Sign out">
+                        <i class="fas fa-sign-out-alt mr-2"></i>Sign Out
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Main content -->
+            <div class="text-center mb-12 animate-fadeInUp">
+                <div class="relative inline-block mb-6">
+                    <img src="https://hugo_wong.pyscriptapps.com/ict-ai-v4-3/latest/logo.jpg" 
+                         alt="Platform Logo" 
+                         class="w-20 h-20 mx-auto rounded-2xl shadow-xl">
+                </div>
+                <h1 id="aiListHeader" class="text-4xl font-bold text-gray-900 dark:text-white mb-4">
+                    Subject AI Tools
+                </h1>
+                <p class="text-xl text-gray-600 dark:text-gray-300">
+                    Choose the perfect AI tool for your learning needs
+                </p>
+            </div>
+            
+            <!-- AI Options -->
+            <div class="max-w-2xl mx-auto space-y-4 mb-12" id="aiOptions">
+                <!-- AI options will be populated by JavaScript -->
+            </div>
+            
+            <footer class="text-center text-sm text-gray-500 dark:text-gray-400 mt-12 pt-8 border-t border-gray-200 dark:border-gray-700">
+                <p class="mb-2">Designed by Hugo Wong</p>
+                <p>Copyright © 2025 Wong. All rights reserved.</p>
+            </footer>
+        </div>
+    </div>
+
+    <!-- Ask AI Interface -->
+    <div class="container mx-auto px-4 py-8 hidden" id="askAIInterface">
+        <div class="max-w-4xl mx-auto h-screen flex flex-col">
+            <!-- Header -->
+            <div class="flex justify-between items-center mb-6 no-print">
+                <button onclick="showAIList(currentSubject)" 
+                        class="flex items-center px-4 py-2 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 rounded-xl transition-all duration-200"
+                        aria-label="Back to AI tools">
+                    <i class="fas fa-arrow-left mr-2"></i>Back to Tools
+                </button>
+                <div class="flex space-x-3">
+                    <button id="theme-toggle-ask-ai" 
+                            class="p-3 bg-white dark:bg-gray-800 rounded-xl shadow-lg hover:shadow-xl transition-all duration-200 text-gray-600 dark:text-gray-300"
+                            aria-label="Toggle dark mode">
+                        <i class="fas fa-moon dark:hidden"></i>
+                        <i class="fas fa-sun hidden dark:block"></i>
+                    </button>
+                    <button id="sign-out-button-ask-ai" 
+                            class="px-4 py-2 bg-red-500 hover:bg-red-600 text-white rounded-xl transition-all duration-200 font-medium"
+                            aria-label="Sign out">
+                        <i class="fas fa-sign-out-alt mr-2"></i>Sign Out
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Chat header -->
+            <div class="text-center mb-6">
+                <h1 id="askAIHeader" class="text-3xl font-bold text-gray-900 dark:text-white mb-2">
+                    <i class="fas fa-robot mr-2 text-blue-500"></i>Ask AI
+                </h1>
+                <p class="text-gray-600 dark:text-gray-300">Ask me anything about your subject!</p>
+            </div>
+            
+            <!-- Chat container -->
+            <div class="flex-1 bg-white dark:bg-gray-800 rounded-2xl shadow-xl flex flex-col">
+                <!-- Chat messages -->
+                <div id="askAIChatBox" 
+                     class="flex-1 p-6 overflow-y-auto custom-scrollbar space-y-4"
+                     role="log"
+                     aria-label="Chat messages"
+                     aria-live="polite">
+                    <div class="flex justify-start">
+                        <div class="message-bubble ai-bubble bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white p-4 rounded-2xl rounded-bl-sm">
+                            <div class="flex items-start space-x-3">
+                                <div class="w-8 h-8 bg-gradient-to-br from-blue-400 to-blue-600 rounded-full flex items-center justify-center">
+                                    <i class="fas fa-robot text-white text-sm"></i>
+                                </div>
+                                <div>
+                                    <p class="font-medium mb-1">AI Assistant</p>
+                                    <p>Hello! How can I assist you today?</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Input area -->
+                <div class="p-6 border-t border-gray-200 dark:border-gray-600">
+                    <div class="space-y-4">
+                        <!-- Image preview -->
+                        <div id="askAIImagePreviewContainer" class="hidden">
+                            <img id="askAIImagePreview" 
+                                 class="max-w-full h-32 object-cover rounded-xl shadow-lg" 
+                                 alt="Image preview">
+                            <button onclick="clearImagePreview('askAI')" 
+                                    class="mt-2 px-3 py-1 bg-red-500 hover:bg-red-600 text-white rounded-lg text-sm transition-colors duration-200">
+                                <i class="fas fa-times mr-1"></i>Remove
+                            </button>
+                        </div>
+                        
+                        <!-- Text input -->
+                        <div class="flex space-x-3">
+                            <textarea id="askAIInput" 
+                                      placeholder="Type your question here..." 
+                                      class="flex-1 p-4 border border-gray-300 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all duration-200 bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 resize-none"
+                                      rows="3"
+                                      aria-label="Type your question"></textarea>
+                        </div>
+                        
+                        <!-- Action buttons -->
+                        <div class="flex flex-wrap items-center justify-between gap-3">
+                            <div class="flex space-x-3">
+                                <label for="askAIPhotoInput" 
+                                       class="px-4 py-2 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 rounded-xl transition-all duration-200 cursor-pointer">
+                                    <i class="fas fa-image mr-2"></i>Upload Image
+                                </label>
+                                <input type="file" 
+                                       id="askAIPhotoInput" 
+                                       accept="image/*" 
+                                       onchange="previewImage('askAI')" 
+                                       class="hidden">
+                                
+                                <button onclick="pasteImage('askAI')" 
+                                        class="px-4 py-2 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 rounded-xl transition-all duration-200"
+                                        aria-label="Paste image from clipboard">
+                                    <i class="fas fa-paste mr-2"></i>Paste Image
+                                </button>
+                            </div>
+                            
+                            <button id="askAISendBtn" 
+                                    onclick="sendMessage('askAI')" 
+                                    class="px-6 py-2 btn-primary text-white rounded-xl font-medium transition-all duration-200 focus:ring-4 focus:ring-blue-300 outline-none"
+                                    aria-label="Send message">
+                                <i class="fas fa-paper-plane mr-2"></i>Send
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Dictionary AI Interface -->
+    <div class="container mx-auto px-4 py-8 hidden" id="dictionaryAIInterface">
+        <div class="max-w-4xl mx-auto h-screen flex flex-col">
+            <!-- Header -->
+            <div class="flex justify-between items-center mb-6 no-print">
+                <button onclick="showAIList(currentSubject)" 
+                        class="flex items-center px-4 py-2 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 rounded-xl transition-all duration-200"
+                        aria-label="Back to AI tools">
+                    <i class="fas fa-arrow-left mr-2"></i>Back to Tools
+                </button>
+                <div class="flex space-x-3">
+                    <button id="theme-toggle-dictionary-ai" 
+                            class="p-3 bg-white dark:bg-gray-800 rounded-xl shadow-lg hover:shadow-xl transition-all duration-200 text-gray-600 dark:text-gray-300"
+                            aria-label="Toggle dark mode">
+                        <i class="fas fa-moon dark:hidden"></i>
+                        <i class="fas fa-sun hidden dark:block"></i>
+                    </button>
+                    <button id="sign-out-button-dictionary-ai" 
+                            class="px-4 py-2 bg-red-500 hover:bg-red-600 text-white rounded-xl transition-all duration-200 font-medium"
+                            aria-label="Sign out">
+                        <i class="fas fa-sign-out-alt mr-2"></i>Sign Out
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Chat header -->
+            <div class="text-center mb-6">
+                <h1 id="dictionaryAIHeader" class="text-3xl font-bold text-gray-900 dark:text-white mb-2">
+                    <i class="fas fa-book mr-2 text-green-500"></i>Dictionary AI
+                </h1>
+                <p class="text-gray-600 dark:text-gray-300">Enter a term to get a detailed explanation</p>
+            </div>
+            
+            <!-- Chat container -->
+            <div class="flex-1 bg-white dark:bg-gray-800 rounded-2xl shadow-xl flex flex-col">
+                <!-- Chat messages -->
+                <div id="dictionaryAIChatBox" 
+                     class="flex-1 p-6 overflow-y-auto custom-scrollbar space-y-4"
+                     role="log"
+                     aria-label="Chat messages"
+                     aria-live="polite">
+                    <div class="flex justify-start">
+                        <div class="message-bubble ai-bubble bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white p-4 rounded-2xl rounded-bl-sm">
+                            <div class="flex items-start space-x-3">
+                                <div class="w-8 h-8 bg-gradient-to-br from-green-400 to-green-600 rounded-full flex items-center justify-center">
+                                    <i class="fas fa-book text-white text-sm"></i>
+                                </div>
+                                <div>
+                                    <p class="font-medium mb-1">Dictionary AI</p>
+                                    <p>Hello! Enter a term to learn more.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Input area -->
+                <div class="p-6 border-t border-gray-200 dark:border-gray-600">
+                    <div class="flex space-x-3">
+                        <textarea id="dictionaryAIInput" 
+                                  placeholder="Enter word or phrase..." 
+                                  class="flex-1 p-4 border border-gray-300 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent outline-none transition-all duration-200 bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 resize-none"
+                                  rows="2"
+                                  aria-label="Enter term to define"></textarea>
+                        
+                        <button id="dictionaryAISendBtn" 
+                                onclick="sendMessage('dictionaryAI')" 
+                                class="px-6 py-2 bg-gradient-to-br from-green-400 to-green-600 hover:from-green-500 hover:to-green-700 text-white rounded-xl font-medium transition-all duration-200 focus:ring-4 focus:ring-green-300 outline-none"
+                                aria-label="Look up term">
+                            <i class="fas fa-search mr-2"></i>Define
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Guide Learning Interface -->
+    <div class="container mx-auto px-4 py-8 hidden" id="guideLearningInterface">
+        <div class="max-w-4xl mx-auto h-screen flex flex-col">
+            <!-- Header -->
+            <div class="flex justify-between items-center mb-6 no-print">
+                <button onclick="showAIList(currentSubject)" 
+                        class="flex items-center px-4 py-2 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 rounded-xl transition-all duration-200"
+                        aria-label="Back to AI tools">
+                    <i class="fas fa-arrow-left mr-2"></i>Back to Tools
+                </button>
+                <div class="flex space-x-3">
+                    <button id="theme-toggle-guide-learning" 
+                            class="p-3 bg-white dark:bg-gray-800 rounded-xl shadow-lg hover:shadow-xl transition-all duration-200 text-gray-600 dark:text-gray-300"
+                            aria-label="Toggle dark mode">
+                        <i class="fas fa-moon dark:hidden"></i>
+                        <i class="fas fa-sun hidden dark:block"></i>
+                    </button>
+                    <button id="sign-out-button-guide-learning" 
+                            class="px-4 py-2 bg-red-500 hover:bg-red-600 text-white rounded-xl transition-all duration-200 font-medium"
+                            aria-label="Sign out">
+                        <i class="fas fa-sign-out-alt mr-2"></i>Sign Out
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Chat header -->
+            <div class="text-center mb-6">
+                <h1 id="guideLearningHeader" class="text-3xl font-bold text-gray-900 dark:text-white mb-2">
+                    <i class="fas fa-compass mr-2 text-purple-500"></i>Guide Learning
+                </h1>
+                <p class="text-gray-600 dark:text-gray-300">Ask a question, and I'll guide you to the answer!</p>
+            </div>
+            
+            <!-- Chat container -->
+            <div class="flex-1 bg-white dark:bg-gray-800 rounded-2xl shadow-xl flex flex-col">
+                <!-- Chat messages -->
+                <div id="guideLearningChatBox" 
+                     class="flex-1 p-6 overflow-y-auto custom-scrollbar space-y-4"
+                     role="log"
+                     aria-label="Chat messages"
+                     aria-live="polite">
+                    <div class="flex justify-start">
+                        <div class="message-bubble ai-bubble bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white p-4 rounded-2xl rounded-bl-sm">
+                            <div class="flex items-start space-x-3">
+                                <div class="w-8 h-8 bg-gradient-to-br from-purple-400 to-purple-600 rounded-full flex items-center justify-center">
+                                    <i class="fas fa-compass text-white text-sm"></i>
+                                </div>
+                                <div>
+                                    <p class="font-medium mb-1">Guide AI</p>
+                                    <p>Hello! Ask a question to get started.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Input area -->
+                <div class="p-6 border-t border-gray-200 dark:border-gray-600">
+                    <div class="space-y-4">
+                        <!-- Image preview -->
+                        <div id="guideLearningImagePreviewContainer" class="hidden">
+                            <img id="guideLearningImagePreview" 
+                                 class="max-w-full h-32 object-cover rounded-xl shadow-lg" 
+                                 alt="Image preview">
+                            <button onclick="clearImagePreview('guideLearning')" 
+                                    class="mt-2 px-3 py-1 bg-red-500 hover:bg-red-600 text-white rounded-lg text-sm transition-colors duration-200">
+                                <i class="fas fa-times mr-1"></i>Remove
+                            </button>
+                        </div>
+                        
+                        <!-- Text input -->
+                        <div class="flex space-x-3">
+                            <textarea id="guideLearningInput" 
+                                      placeholder="Type your question here..." 
+                                      class="flex-1 p-4 border border-gray-300 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent outline-none transition-all duration-200 bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 resize-none"
+                                      rows="3"
+                                      aria-label="Type your question"></textarea>
+                        </div>
+                        
+                        <!-- Action buttons -->
+                        <div class="flex flex-wrap items-center justify-between gap-3">
+                            <div class="flex space-x-3">
+                                <label for="guideLearningPhotoInput" 
+                                       class="px-4 py-2 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 rounded-xl transition-all duration-200 cursor-pointer">
+                                    <i class="fas fa-image mr-2"></i>Upload Image
+                                </label>
+                                <input type="file" 
+                                       id="guideLearningPhotoInput" 
+                                       accept="image/*" 
+                                       onchange="previewImage('guideLearning')" 
+                                       class="hidden">
+                                
+                                <button onclick="pasteImage('guideLearning')" 
+                                        class="px-4 py-2 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 rounded-xl transition-all duration-200"
+                                        aria-label="Paste image from clipboard">
+                                    <i class="fas fa-paste mr-2"></i>Paste Image
+                                </button>
+                            </div>
+                            
+                            <button id="guideLearningSendBtn" 
+                                    onclick="sendMessage('guideLearning')" 
+                                    class="px-6 py-2 bg-gradient-to-br from-purple-400 to-purple-600 hover:from-purple-500 hover:to-purple-700 text-white rounded-xl font-medium transition-all duration-200 focus:ring-4 focus:ring-purple-300 outline-none"
+                                    aria-label="Send message">
+                                <i class="fas fa-paper-plane mr-2"></i>Send
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
+        import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyAXCSDsibC9yTJed3cbRjmWmOIMv1A2cr8",
+            authDomain: "login-system-9c566.firebaseapp.com",
+            projectId: "login-system-9c566",
+            storageBucket: "login-system-9c566.firebasestorage.app",
+            messagingSenderId: "547074181663",
+            appId: "1:547074181663:web:6e3afd6c7c1ec6ae43232a",
+            measurementId: "G-09M3C3D6PT"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+
+        // DOM Elements
+        const authScreen = document.getElementById('authScreen');
+        const coverScreen = document.getElementById('coverScreen');
+        const aiListScreen = document.getElementById('aiListScreen');
+        const askAIInterface = document.getElementById('askAIInterface');
+        const dictionaryAIInterface = document.getElementById('dictionaryAIInterface');
+        const guideLearningInterface = document.getElementById('guideLearningInterface');
+        const emailInput = document.getElementById('email');
+        const passwordInput = document.getElementById('password');
+        const signInButton = document.getElementById('sign-in-button');
+        const registerButton = document.getElementById('register-button');
+        const signOutButtons = document.querySelectorAll('[id^="sign-out-button"]');
+        const authError = document.getElementById('auth-error');
+
+        // Loading state management
+        function setLoadingState(element, isLoading) {
+            if (isLoading) {
+                element.disabled = true;
+                element.innerHTML = `<div class="loading-dots mr-2"><span></span><span></span><span></span></div>Loading...`;
+            } else {
+                element.disabled = false;
+                // Restore original content based on button type
+                if (element.id === 'sign-in-button') {
+                    element.innerHTML = '<i class="fas fa-sign-in-alt mr-2"></i>Sign In';
+                } else if (element.id === 'register-button') {
+                    element.innerHTML = '<i class="fas fa-user-plus mr-2"></i>Create Account';
+                }
+            }
+        }
+
+        // Firebase Authentication
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                authScreen.classList.add('hidden');
+                coverScreen.classList.remove('hidden');
+                console.log('User signed in:', user.email);
+            } else {
+                authScreen.classList.remove('hidden');
+                coverScreen.classList.add('hidden');
+                aiListScreen.classList.add('hidden');
+                askAIInterface.classList.add('hidden');
+                dictionaryAIInterface.classList.add('hidden');
+                guideLearningInterface.classList.add('hidden');
+                authError.classList.add('hidden');
+                authError.textContent = '';
+                console.log('No user signed in');
+            }
+        });
+
+        signInButton.addEventListener('click', () => {
+            const email = emailInput.value.trim();
+            const password = passwordInput.value.trim();
+            
+            if (!email || !password) {
+                showError('Please enter both email and password.');
+                return;
+            }
+            
+            setLoadingState(signInButton, true);
+            
+            signInWithEmailAndPassword(auth, email, password)
+                .then(() => {
+                    emailInput.value = '';
+                    passwordInput.value = '';
+                    hideError();
+                })
+                .catch((error) => {
+                    showError(`Error: ${error.message}`);
+                })
+                .finally(() => {
+                    setLoadingState(signInButton, false);
+                });
+        });
+
+        registerButton.addEventListener('click', () => {
+            const email = emailInput.value.trim();
+            const password = passwordInput.value.trim();
+            
+            if (!email || !password) {
+                showError('Please enter both email and password.');
+                return;
+            }
+            
+            setLoadingState(registerButton, true);
+            
+            createUserWithEmailAndPassword(auth, email, password)
+                .then(() => {
+                    emailInput.value = '';
+                    passwordInput.value = '';
+                    hideError();
+                })
+                .catch((error) => {
+                    showError(`Error: ${error.message}`);
+                })
+                .finally(() => {
+                    setLoadingState(registerButton, false);
+                });
+        });
+
+        signOutButtons.forEach(btn => btn.addEventListener('click', () => {
+            signOut(auth).then(() => console.log('Signed out')).catch((error) => {
+                showError(`Error: ${error.message}`);
+            });
+        }));
+
+        function showError(message) {
+            authError.textContent = message;
+            authError.classList.remove('hidden');
+        }
+
+        function hideError() {
+            authError.classList.add('hidden');
+            authError.textContent = '';
+        }
+
+        // Make functions globally available
+        window.auth = auth;
+    </script>
+
+    <script src="https://unpkg.com/tesseract.js@5.1.0/dist/tesseract.min.js"></script>
+    <script>
+        // DEEPSEEK API KEY Configuration
+        const API_URL = "https://chatapi.akash.network/api/v1/chat/completions";
+        const API_KEY = "sk-m8oHwlHRGajxqMtKK1TzCw";
+        const MODEL = "DeepSeek-R1-0528";
+
+        // Subject-Specific System Prompts
+        const SUBJECTS = {
+            'English': {
+                ask: `You are an AI Learning Assistant designed for Hong Kong DSE English students. Provide clear, concise, and engaging answers to enhance language proficiency in reading, writing, speaking, and listening. Focus on grammar, vocabulary, text analysis, and composition skills. Use Markdown formatting (e.g., **bold**, *italic*, ### for headings) for clarity and structure. Include practical examples (e.g., sample sentences, writing prompts) to illustrate concepts. Avoid complex linguistic jargon unless explained in simple terms. For advanced topics (e.g., stylistic devices, essay structure), provide explanations in both English and Cantonese (using traditional Chinese characters) to support comprehension. If an image is provided, analyze its content (e.g., text excerpts, advertisements, poems) and any extracted text (via OCR) if relevant to English, then respond with insights or corrections. If the question, image, or extracted text is unclear, ask for clarification to ensure relevance.Don't show any thought process, i.e. <think></think>, etc.`,
+                dict: `You are a Dictionary AI designed for Hong Kong DSE English students. Provide detailed explanations of English-related terms or phrases (e.g., idioms, literary terms, grammar rules) entered by the user. Use Markdown formatting (e.g., **bold**, *italic*, ### for headings) for clarity. For each term, include: - A clear definition in English, emphasizing its role in language use. - For complex terms (e.g., metaphor, subjunctive mood), an additional explanation in Cantonese (using traditional Chinese characters). - Sample usage (e.g., sentences, short paragraphs, or dialogues) showing the term in context. - A breakdown of how the example enhances communication or writing. Keep responses engaging, beginner-friendly, and focused on practical language skills. If the term is unclear or not English-related, ask for clarification or suggest relevant English terms.Don't show any thought process, i.e. <think></think>, etc.`,
+                guide: `You are a Guide Learning AI designed for Hong Kong DSE English students. Instead of giving direct answers, guide the user to improve their language skills by simplifying their question and offering tailored hints. Use Markdown formatting (e.g., **bold**, *italic*, ### for headings) for clarity. For each question: - Restate the user's question in both English and Traditional Chinese (繁體中文) to ensure understanding. - Break the question into smaller parts (e.g., grammar, vocabulary, or structure). - Provide hints or guiding questions to encourage critical thinking (e.g., "What tense fits this context?" or "Can you identify the tone of this text?"). - If an image is provided, analyze its content (e.g., text excerpts, writing samples) and any extracted text (via OCR) if relevant to English, then incorporate this into the guidance. - Keep responses encouraging, beginner-friendly, and focused on building confidence in language use. If the question, image, or extracted text is unclear, ask for clarification.Don't show any thought process, i.e. <think></think>, etc.`
+            },
+            'Math': {
+                ask: `You are an AI Learning Assistant designed for Hong Kong DSE Mathematics students. Provide clear, concise, and structured answers to deepen understanding of mathematical concepts, problem-solving techniques, and quantitative reasoning. Focus on topics like algebra, geometry, calculus, and statistics. Use Markdown formatting (e.g., **bold**, *italic*, ### for headings) to organize explanations and highlight key steps. Include step-by-step examples (e.g., solving equations, graphing functions) to clarify processes. Avoid abstract mathematical jargon unless explained simply. For complex topics (e.g., derivatives, probability distributions), provide explanations in both English and Cantonese (using traditional Chinese characters) to aid comprehension. If an image is provided, analyze its content (e.g., equations, graphs, geometric figures) and any extracted text (via OCR) if relevant to Mathematics, then respond with detailed solutions or interpretations. If the question, image, or extracted text is unclear, ask for clarification.Don't show any thought process, i.e. <think></think>, etc.`,
+                dict: `You are a Dictionary AI designed for Hong Kong DSE Mathematics students. Provide detailed explanations of Mathematics-related terms or concepts (e.g., polynomial, sine, standard deviation) entered by the user. Use Markdown formatting (e.g., **bold**, *italic*, ### for headings) for clarity. For each term, include: - A clear definition in English, emphasizing its mathematical significance. - For complex concepts (e.g., matrices, logarithms), an additional explanation in Cantonese (using traditional Chinese characters). - Sample usage (e.g., a solved problem or graph) demonstrating the term's application. - A step-by-step explanation of the example to reinforce understanding. Keep responses structured, beginner-friendly, and focused on practical problem-solving. If the term is unclear or not Mathematics-related, ask for clarification or suggest relevant Mathematics terms.Don't show any thought process, i.e. <think></think>, etc.`,
+                guide: `You are a Guide Learning AI designed for Hong Kong DSE Mathematics students. Instead of giving direct answers, guide the user to solve mathematical problems by simplifying the question and offering strategic hints. Use Markdown formatting (e.g., **bold**, *italic*, ### for headings) for clarity. For each question: - Restate the user's question in both English and Traditional Chinese (繁體中文) to ensure understanding. - Break the question into smaller, logical steps (e.g., identifying variables, choosing a formula). - Provide hints or guiding questions to lead the user to the solution (e.g., "What formula applies to this shape?" or "Can you simplify this expression first?"). - If an image is provided, analyze its content (e.g., equations, graphs) and any extracted text (via OCR) if relevant to Mathematics, then incorporate this into the guidance. - Keep responses encouraging, beginner-friendly, and focused on building problem-solving skills. If the question, image, or extracted text is unclear, ask for clarification.Don't show any thought process, i.e. <think></think>, etc.`
+            },
+            'Physics': {
+                ask: `You are an AI Learning Assistant designed for Hong Kong DSE Physics students. Provide clear, concise, and visually-oriented answers to deepen understanding of physical laws, phenomena, and experimental methods. Focus on topics like mechanics, electricity, waves, and modern physics. Use Markdown formatting (e.g., **bold**, *italic*, ### for headings) to structure explanations and highlight key principles. Include practical examples (e.g., calculations, experimental setups) to connect theory to real-world applications. Avoid technical jargon unless explained simply. For complex topics (e.g., electromagnetic induction, nuclear physics), provide explanations in both English and Cantonese (using traditional Chinese characters) to aid comprehension. If an image is provided, analyze its content (e.g., circuit diagrams, motion graphs, experimental setups) and any extracted text (via OCR) if relevant to Physics, then respond with detailed analysis or solutions. If the question, image, or extracted text is unclear, ask for clarification.Don't show any thought process, i.e. <think></think>, etc.`,
+                dict: `You are a Dictionary AI designed for Hong Kong DSE Physics students. Provide detailed explanations of Physics-related terms or concepts (e.g., momentum, capacitance, diffraction) entered by the user. Use Markdown formatting (e.g., **bold**, *italic*, ### for headings) for clarity. For each term, include: - A clear definition in English, emphasizing its physical significance. - For complex concepts (e.g., quantum tunneling, angular momentum), an additional explanation in Cantonese (using traditional Chinese characters). - Sample usage (e.g., a calculation, diagram, or experimental context) demonstrating the term's application. - A detailed explanation of the example to connect it to physical principles. Keep responses clear, beginner-friendly, and focused on real-world relevance. If the term is unclear or not Physics-related, ask for clarification or suggest relevant Physics terms.Don't show any thought process, i.e. <think></think>, etc.`,
+                guide: `You are a Guide Learning AI designed for Hong Kong DSE Physics students. Instead of giving direct answers, guide the user to understand physical concepts or solve problems by simplifying the question and offering intuitive hints. Use Markdown formatting (e.g., **bold**, *italic*, ### for headings) for clarity. For each question: - Restate the user's question in both English and Traditional Chinese (繁體中文) to ensure understanding. - Break the question into smaller parts (e.g., identifying forces, applying a law). - Provide hints or guiding questions to lead the user to the solution (e.g., "What forces act on this object?" or "How does energy conservation apply here?"). - If an image is provided, analyze its content (e.g., circuit diagrams, motion graphs) and any extracted text (via OCR) if relevant to Physics, then incorporate this into the guidance. - Keep responses engaging, beginner-friendly, and focused on fostering curiosity about physical phenomena. If the question, image, or extracted text is unclear, ask for clarification.Don't show any thought process, i.e. <think></think>, etc.`
+            },
+            'Biology': {
+                ask: `You are an AI Learning Assistant designed for Hong Kong DSE Biology students. Provide clear, concise, and process-oriented answers to deepen understanding of biological systems, processes, and their applications. Focus on topics like cell biology, genetics, ecology, and human physiology. Use Markdown formatting (e.g., **bold**, *italic*, ### for headings) to structure explanations and highlight key processes. Include practical examples (e.g., biological processes, experimental observations) to connect concepts to real-life contexts like health or the environment. Avoid scientific jargon unless explained simply. For complex topics (e.g., gene expression, ecological succession), provide explanations in both English and Cantonese (using traditional Chinese characters) to aid comprehension. If an image is provided, analyze its content (e.g., cell diagrams, food webs, anatomical drawings) and any extracted text (via OCR) if relevant to Biology, then respond with detailed analysis or explanations. If the question, image, or extracted text is unclear, ask for clarification.Don't show any thought process, i.e. <think></think>, etc.`,
+                dict: `You are a Dictionary AI designed for Hong Kong DSE Biology students. Provide detailed explanations of Biology-related terms or concepts (e.g., photosynthesis, mutation, biodiversity) entered by the user. Use Markdown formatting (e.g., **bold**, *italic*, ### for headings) for clarity. For each term, include: - A clear definition in English, emphasizing its biological role. - For complex concepts (e.g., meiosis, neural signaling), an additional explanation in Cantonese (using traditional Chinese characters). - Sample usage (e.g., a process description, diagram, or experimental context) demonstrating the term's application. - A detailed explanation of the example to connect it to biological principles. Keep responses clear, beginner-friendly, and focused on real-life biological applications. If the term is unclear or not Biology-related, ask for clarification or suggest relevant Biology terms.Don't show any thought process, i.e. <think></think>, etc.`,
+                guide: `You are a Guide Learning AI designed for Hong Kong DSE Biology students. Instead of giving direct answers, guide the user to understand biological concepts or answer questions by simplifying the question and offering intuitive hints. Use Markdown formatting (e.g., **bold**, *italic*, ### for headings) for clarity. For each question: - Restate the user's question in both English and Traditional Chinese (繁體中文) to ensure understanding. - Break the question into smaller parts (e.g., identifying a process, analyzing a structure). - Provide hints or guiding questions to lead the user to the solution (e.g., "What are the stages of this process?" or "How does this structure function in the body?"). - If an image is provided, analyze its content (e.g., cell diagrams, food webs) and any extracted text (via OCR) if relevant to Biology, then incorporate this into the guidance. - Keep responses engaging, beginner-friendly, and focused on fostering curiosity about living systems. If the question, image, or extracted text is unclear, ask for clarification.Don't show any thought process, i.e. <think></think>, etc.`
+            },
+            'ICT': {
+                ask: `You are an AI Learning Assistant designed for Hong Kong DSE Information and Communication Technology students. Provide clear, concise, and practical answers to deepen understanding of technology, coding, and digital systems. Focus on topics like programming, networking, databases, and cybersecurity. Use Markdown formatting (e.g., **bold**, *italic*, ### for headings) to structure explanations and highlight key technical points. Include hands-on examples (e.g., code snippets, network configurations) to illustrate concepts. Avoid technical jargon unless explained simply. For complex topics (e.g., object-oriented programming, encryption), provide explanations in both English and Cantonese (using traditional Chinese characters) to aid comprehension. If an image is provided, analyze its content (e.g., code screenshots, network diagrams, UI designs) and any extracted text (via OCR) if relevant to ICT, then respond with detailed analysis or solutions. If the question, image, or extracted text is unclear, ask for clarification.Don't show any thought process, i.e. <think></think>, etc.`,
+                dict: `You are a Dictionary AI designed for Hong Kong DSE Information and Communication Technology students. Provide detailed explanations of ICT-related terms or concepts (e.g., algorithm, firewall, SQL query) entered by the user. Use Markdown formatting (e.g., **bold**, *italic*, ### for headings) for clarity. For each term, include: - A clear definition in English, emphasizing its technical significance. - For complex concepts (e.g., machine learning, blockchain), an additional explanation in Cantonese (using traditional Chinese characters). - Sample usage (e.g., a code snippet, network setup, or application scenario) demonstrating the term's practical use. - A detailed explanation of the example to clarify its functionality. Keep responses practical, beginner-friendly, and focused on real-world ICT applications. If the term is unclear or not ICT-related, ask for clarification or suggest relevant ICT terms.Don't show any thought process, i.e. <think></think>, etc.`,
+                guide: `You are a Guide Learning AI designed for Hong Kong DSE Information and Communication Technology students. Instead of giving direct answers, guide the user to understand technical concepts or solve problems by simplifying the question and offering practical hints. Use Markdown formatting (e.g., **bold**, *italic*, ### for headings) for clarity. For each question: - Restate the user's question in both English and Traditional Chinese (繁體中文) to ensure understanding. - Break the question into smaller parts (e.g., identifying a coding logic, understanding a network component). - Provide hints or guiding questions to lead the user to the solution (e.g., "What does this code loop do?" or "Which protocol suits this network?"). - If an image is provided, analyze its content (e.g., code screenshots, network diagrams) and any extracted text (via OCR) if relevant to ICT, then incorporate this into the guidance. - Keep responses engaging, beginner-friendly, and focused on building technical confidence. Unless the question, image, or extracted text is unclear, ask for clarification.Don't show any thought process, i.e. <think></think>, etc.`
+            }
+        };
+
+        // Global variables
+        let currentSubject = '';
+        let histories = {
+            'askAI': [],
+            'dictionaryAI': [],
+            'guideLearning': []
+        };
+
+        // Theme management
+        function toggleTheme() {
+            document.documentElement.classList.toggle('dark');
+            localStorage.setItem('theme', document.documentElement.classList.contains('dark') ? 'dark' : 'light');
+        }
+
+        // Load theme preference
+        if (localStorage.getItem('theme') === 'dark' || (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+        }
+
+        // Theme toggle event listeners
+        document.querySelectorAll('[id^="theme-toggle"]').forEach(btn => {
+            btn.addEventListener('click', toggleTheme);
+        });
+
+        // Navigation Functions
+        function showCover() {
+            document.getElementById('coverScreen').classList.remove('hidden');
+            document.getElementById('aiListScreen').classList.add('hidden');
+            document.getElementById('askAIInterface').classList.add('hidden');
+            document.getElementById('dictionaryAIInterface').classList.add('hidden');
+            document.getElementById('guideLearningInterface').classList.add('hidden');
+        }
+
+        function showAIList(subject) {
+            currentSubject = subject;
+            document.getElementById('coverScreen').classList.add('hidden');
+            document.getElementById('aiListScreen').classList.remove('hidden');
+            document.getElementById('askAIInterface').classList.add('hidden');
+            document.getElementById('dictionaryAIInterface').classList.add('hidden');
+            document.getElementById('guideLearningInterface').classList.add('hidden');
+
+            document.getElementById('aiListHeader').innerHTML = `<i class="fas fa-${getSubjectIcon(subject)} mr-3"></i>${subject} AI Tools`;
+            
+            const aiOptions = document.getElementById('aiOptions');
+            const tools = [
+                {
+                    name: 'Ask AI',
+                    icon: 'fas fa-robot',
+                    description: 'Get detailed answers to your questions',
+                    action: () => showAI(subject, 'askAI'),
+                    color: 'from-blue-400 to-blue-600'
+                },
+                {
+                    name: 'Dictionary AI',
+                    icon: 'fas fa-book',
+                    description: 'Look up terms and concepts',
+                    action: () => showAI(subject, 'dictionaryAI'),
+                    color: 'from-green-400 to-green-600'
+                },
+                {
+                    name: 'Guide Learning',
+                    icon: 'fas fa-compass',
+                    description: 'Get guided hints and step-by-step help',
+                    action: () => showAI(subject, 'guideLearning'),
+                    color: 'from-purple-400 to-purple-600'
+                }
+            ];
+
+            if (subject === 'English') {
+                tools.push(
+                    {
+                        name: 'Vocabulary Generator',
+                        icon: 'fas fa-lightbulb',
+                        description: 'Generate custom vocabulary lists',
+                        action: () => window.open('https://hugo_wong.pyscriptapps.com/eng-vocab-ai-v3/latest/', '_blank'),
+                        color: 'from-yellow-400 to-yellow-600'
+                    },
+                    {
+                        name: 'Vocabulary Quiz',
+                        icon: 'fas fa-question-circle',
+                        description: 'Test your vocabulary knowledge',
+                        action: () => window.open('https://hugo_wong.pyscriptapps.com/ai-vocab-quiz/latest/', '_blank'),
+                        color: 'from-red-400 to-red-600'
+                    }
+                );
+            }
+
+            aiOptions.innerHTML = tools.map(tool => `
+                <div class="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-xl hover:shadow-2xl transition-all duration-300 cursor-pointer group animate-fadeInUp"
+                     onclick="handleToolClick('${tool.name}', '${subject}')"
+                     role="button"
+                     tabindex="0"
+                     aria-label="${tool.name} for ${subject}">
+                    <div class="flex items-center space-x-4">
+                        <div class="w-14 h-14 bg-gradient-to-br ${tool.color} rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                            <i class="${tool.icon} text-2xl text-white"></i>
+                        </div>
+                        <div class="flex-1">
+                            <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-1">${tool.name}</h3>
+                            <p class="text-gray-600 dark:text-gray-300">${tool.description}</p>
+                        </div>
+                        <div class="opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                            <i class="fas fa-arrow-right text-gray-400"></i>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function handleToolClick(toolName, subject) {
+            if (toolName === 'Ask AI') {
+                showAI(subject, 'askAI');
+            } else if (toolName === 'Dictionary AI') {
+                showAI(subject, 'dictionaryAI');
+            } else if (toolName === 'Guide Learning') {
+                showAI(subject, 'guideLearning');
+            } else if (toolName === 'Vocabulary Generator') {
+                window.open('https://hugo_wong.pyscriptapps.com/eng-vocab-ai-v3/latest/', '_blank');
+            } else if (toolName === 'Vocabulary Quiz') {
+                window.open('https://hugo_wong.pyscriptapps.com/ai-vocab-quiz/latest/', '_blank');
+            }
+        }
+
+        function getSubjectIcon(subject) {
+            const icons = {
+                'English': 'book-open',
+                'Math': 'calculator',
+                'Physics': 'atom',
+                'Biology': 'dna',
+                'ICT': 'laptop-code'
+            };
+            return icons[subject] || 'book';
+        }
+
+        function showAI(subject, type) {
+            currentSubject = subject;
+            document.getElementById('coverScreen').classList.add('hidden');
+            document.getElementById('aiListScreen').classList.add('hidden');
+            document.getElementById('askAIInterface').classList.add('hidden');
+            document.getElementById('dictionaryAIInterface').classList.add('hidden');
+            document.getElementById('guideLearningInterface').classList.add('hidden');
+            
+            document.getElementById(type + 'Interface').classList.remove('hidden');
+
+            const headers = {
+                askAI: document.getElementById('askAIHeader'),
+                dictionaryAI: document.getElementById('dictionaryAIHeader'),
+                guideLearning: document.getElementById('guideLearningHeader')
+            };
+            
+            const toolNames = {
+                askAI: 'Ask AI',
+                dictionaryAI: 'Dictionary AI',
+                guideLearning: 'Guide Learning'
+            };
+
+            headers[type].innerHTML = `<i class="fas fa-${getToolIcon(type)} mr-2 text-${getToolColor(type)}-500"></i>${toolNames[type]} - ${subject}`;
+            
+            const systemPrompt = SUBJECTS[subject][type.replace('Interface', '')];
+            histories[type] = [{ role: "system", content: systemPrompt }];
+            
+            resetChatBox(type, subject);
+            document.getElementById(type + 'Input').focus();
+        }
+
+        function getToolIcon(type) {
+            const icons = {
+                askAI: 'robot',
+                dictionaryAI: 'book',
+                guideLearning: 'compass'
+            };
+            return icons[type] || 'robot';
+        }
+
+        function getToolColor(type) {
+            const colors = {
+                askAI: 'blue',
+                dictionaryAI: 'green',
+                guideLearning: 'purple'
+            };
+            return colors[type] || 'blue';
+        }
+
+        function resetChatBox(type, subject) {
+            const chatBox = document.getElementById(type + 'ChatBox');
+            const toolNames = {
+                askAI: 'AI Assistant',
+                dictionaryAI: 'Dictionary AI',
+                guideLearning: 'Guide AI'
+            };
+            
+            const welcomeMessages = {
+                askAI: `Hello! How can I assist you with ${subject} today?`,
+                dictionaryAI: 'Hello! Enter a term to learn more.',
+                guideLearning: 'Hello! Ask a question to get started.'
+            };
+
+            chatBox.innerHTML = `
+                <div class="flex justify-start">
+                    <div class="message-bubble ai-bubble bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white p-4 rounded-2xl rounded-bl-sm">
+                        <div class="flex items-start space-x-3">
+                            <div class="w-8 h-8 bg-gradient-to-br from-${getToolColor(type)}-400 to-${getToolColor(type)}-600 rounded-full flex items-center justify-center">
+                                <i class="fas fa-${getToolIcon(type)} text-white text-sm"></i>
+                            </div>
+                            <div>
+                                <p class="font-medium mb-1">${toolNames[type]}</p>
+                                <p>${welcomeMessages[type]}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Image handling functions
+        function previewImage(type) {
+            const preview = document.getElementById(`${type}ImagePreview`);
+            const container = document.getElementById(`${type}ImagePreviewContainer`);
+            const file = document.getElementById(`${type}PhotoInput`).files[0];
+            
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    preview.src = e.target.result;
+                    container.classList.remove('hidden');
+                };
+                reader.readAsDataURL(file);
+            } else {
+                container.classList.add('hidden');
+            }
+        }
+
+        function clearImagePreview(type) {
+            const preview = document.getElementById(`${type}ImagePreview`);
+            const container = document.getElementById(`${type}ImagePreviewContainer`);
+            const input = document.getElementById(`${type}PhotoInput`);
+            
+            preview.src = '';
+            container.classList.add('hidden');
+            input.value = '';
+        }
+
+        async function pasteImage(type) {
+            try {
+                const items = await navigator.clipboard.read();
+                for (const item of items) {
+                    if (item.types.includes('image/png') || item.types.includes('image/jpeg')) {
+                        const blob = await item.getType(item.types.find(t => t.startsWith('image/')));
+                        const preview = document.getElementById(`${type}ImagePreview`);
+                        const container = document.getElementById(`${type}ImagePreviewContainer`);
+                        const input = document.getElementById(`${type}PhotoInput`);
+                        
+                        const file = new File([blob], 'pasted-image.png', { type: blob.type });
+                        const dataTransfer = new DataTransfer();
+                        dataTransfer.items.add(file);
+                        input.files = dataTransfer.files;
+                        
+                        const reader = new FileReader();
+                        reader.onload = (e) => {
+                            preview.src = e.target.result;
+                            container.classList.remove('hidden');
+                        };
+                        reader.readAsDataURL(file);
+                        return;
+                    }
+                }
+                showNotification('No image found in clipboard!', 'warning');
+            } catch (error) {
+                showNotification('Failed to paste image from clipboard!', 'error');
+            }
+        }
+
+        // OCR for Image Text Extraction
+        async function performOCR(file) {
+            try {
+                const { createWorker } = Tesseract;
+                const worker = await createWorker('eng');
+                const { data: { text } } = await worker.recognize(file);
+                await worker.terminate();
+                return text;
+            } catch (error) {
+                console.error('OCR Error:', error);
+                return '';
+            }
+        }
+
+        // Message sending
+        async function sendMessage(type) {
+            const input = document.getElementById(`${type}Input`);
+            const fileInput = document.getElementById(`${type}PhotoInput`);
+            const sendBtn = document.getElementById(`${type}SendBtn`);
+            const chatBox = document.getElementById(`${type}ChatBox`);
+
+            const question = input.value.trim();
+            const file = fileInput?.files[0];
+            
+            if (!question && !file) {
+                showNotification('Please enter a question or upload an image!', 'warning');
+                return;
+            }
+
+            let userContent = question || `Analyze this ${currentSubject}-related image.`;
+            let messageContent = userContent;
+
+            // Add user message to chat
+            addUserMessage(type, userContent, file);
+
+            // Clear inputs
+            input.value = '';
+            if (fileInput) {
+                fileInput.value = '';
+                clearImagePreview(type);
+            }
+
+            // Show loading state
+            setButtonLoading(sendBtn, true);
+            const loadingMessageId = addLoadingMessage(type);
+
+            try {
+                // Process image if present
+                if (file) {
+                    const extractedText = await performOCR(file);
+                    if (extractedText.trim()) {
+                        messageContent = `${question || `Analyze this ${currentSubject}-related image.`}\n\n**Extracted Text:**\n${extractedText}`;
+                    }
+                }
+
+                await sendRequest(type, messageContent, loadingMessageId);
+            } catch (error) {
+                removeMessage(loadingMessageId);
+                addAIMessage(type, `Error: ${error.message}`, true);
+                console.error('Error:', error);
+            } finally {
+                setButtonLoading(sendBtn, false);
+            }
+        }
+
+        function addUserMessage(type, content, file) {
+            const chatBox = document.getElementById(`${type}ChatBox`);
+            const messageDiv = document.createElement('div');
+            messageDiv.className = 'flex justify-end';
+            
+            let imageContent = '';
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    const img = messageDiv.querySelector('.message-image');
+                    if (img) {
+                        img.src = e.target.result;
+                    }
+                };
+                reader.readAsDataURL(file);
+                imageContent = '<img class="message-image max-w-full h-32 object-cover rounded-xl mt-2" alt="Uploaded image">';
+            }
+
+            messageDiv.innerHTML = `
+                <div class="message-bubble user-bubble bg-blue-500 text-white p-4 rounded-2xl rounded-br-sm max-w-xs md:max-w-md lg:max-w-lg">
+                    <div class="flex items-start space-x-3">
+                        <div>
+                            <p class="font-medium mb-1">You</p>
+                            <p>${content}</p>
+                            ${imageContent}
+                        </div>
+                        <div class="w-8 h-8 bg-white bg-opacity-20 rounded-full flex items-center justify-center">
+                            <i class="fas fa-user text-white text-sm"></i>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            chatBox.appendChild(messageDiv);
+            chatBox.scrollTop = chatBox.scrollHeight;
+        }
+
+        function addLoadingMessage(type) {
+            const chatBox = document.getElementById(`${type}ChatBox`);
+            const messageDiv = document.createElement('div');
+            const messageId = 'loading-' + Date.now();
+            messageDiv.id = messageId;
+            messageDiv.className = 'flex justify-start';
+            
+            messageDiv.innerHTML = `
+                <div class="message-bubble ai-bubble bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white p-4 rounded-2xl rounded-bl-sm">
+                    <div class="flex items-start space-x-3">
+                        <div class="w-8 h-8 bg-gradient-to-br from-${getToolColor(type)}-400 to-${getToolColor(type)}-600 rounded-full flex items-center justify-center">
+                            <i class="fas fa-${getToolIcon(type)} text-white text-sm"></i>
+                        </div>
+                        <div>
+                            <p class="font-medium mb-1">AI Assistant</p>
+                            <div class="loading-dots">
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                            </div>
+                            <span class="ml-2 text-sm text-gray-500 dark:text-gray-400">Thinking...</span>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            chatBox.appendChild(messageDiv);
+            chatBox.scrollTop = chatBox.scrollHeight;
+            return messageId;
+        }
+
+        function removeMessage(messageId) {
+            const message = document.getElementById(messageId);
+            if (message) {
+                message.remove();
+            }
+        }
+
+        function addAIMessage(type, content, isError = false) {
+            const chatBox = document.getElementById(`${type}ChatBox`);
+            const messageDiv = document.createElement('div');
+            messageDiv.className = 'flex justify-start';
+            
+            const bgColor = isError ? 'bg-red-50 dark:bg-red-900' : 'bg-gray-100 dark:bg-gray-700';
+            const textColor = isError ? 'text-red-900 dark:text-red-100' : 'text-gray-900 dark:text-white';
+            
+            messageDiv.innerHTML = `
+                <div class="message-bubble ai-bubble ${bgColor} ${textColor} p-4 rounded-2xl rounded-bl-sm max-w-xs md:max-w-md lg:max-w-lg">
+                    <div class="flex items-start space-x-3">
+                        <div class="w-8 h-8 bg-gradient-to-br from-${getToolColor(type)}-400 to-${getToolColor(type)}-600 rounded-full flex items-center justify-center">
+                            <i class="fas fa-${getToolIcon(type)} text-white text-sm"></i>
+                        </div>
+                        <div class="flex-1">
+                            <p class="font-medium mb-1">AI Assistant</p>
+                            <div class="prose prose-sm dark:prose-invert max-w-none">${formatMarkdown(content)}</div>
+                            ${!isError ? `
+                                <div class="mt-3 flex space-x-2">
+                                    <button onclick="copyMessage(this)" 
+                                            class="px-3 py-1 bg-blue-500 hover:bg-blue-600 text-white rounded-lg text-xs transition-colors duration-200"
+                                            aria-label="Copy message">
+                                        <i class="fas fa-copy mr-1"></i>Copy
+                                    </button>
+                                    <button onclick="shareMessage(this)" 
+                                            class="px-3 py-1 bg-green-500 hover:bg-green-600 text-white rounded-lg text-xs transition-colors duration-200"
+                                            aria-label="Share message">
+                                        <i class="fas fa-share mr-1"></i>Share
+                                    </button>
+                                </div>
+                            ` : ''}
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            chatBox.appendChild(messageDiv);
+            chatBox.scrollTop = chatBox.scrollHeight;
+        }
+
+        async function sendRequest(type, messageContent, loadingMessageId) {
+            histories[type].push({ role: "user", content: messageContent });
+            
+            const validMessages = histories[type].filter(msg => msg.content && msg.content.trim() !== '');
+            if (validMessages.length === 0) {
+                throw new Error('No valid messages to send.');
+            }
+
+            try {
+                const response = await fetch(API_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${API_KEY}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        messages: validMessages,
+                        model: MODEL,
+                        stream: false,
+                        temperature: 0
+                    })
+                });
+
+                const responseText = await response.text();
+                if (!response.ok) {
+                    console.error('API Response:', {
+                        status: response.status,
+                        statusText: response.statusText,
+                        body: responseText
+                    });
+                    throw new Error(`API failed: ${response.status} - ${responseText}`);
+                }
+
+                const data = JSON.parse(responseText);
+                const aiResponse = data.choices[0]?.message?.content || "No response received";
+                
+                histories[type].push({ role: "assistant", content: aiResponse });
+                
+                // Remove loading message and add AI response
+                removeMessage(loadingMessageId);
+                addAIMessage(type, aiResponse);
+                
+            } catch (error) {
+                console.error('Request Error:', error);
+                throw error;
+            }
+        }
+
+        function setButtonLoading(button, isLoading) {
+            if (isLoading) {
+                button.disabled = true;
+                button.innerHTML = `
+                    <div class="loading-dots mr-2">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                    Sending...
+                `;
+            } else {
+                button.disabled = false;
+                const icon = button.id.includes('dictionary') ? 'fas fa-search' : 'fas fa-paper-plane';
+                const text = button.id.includes('dictionary') ? 'Define' : 'Send';
+                button.innerHTML = `<i class="${icon} mr-2"></i>${text}`;
+            }
+        }
+
+        function copyMessage(button) {
+            const messageContent = button.closest('.message-bubble').querySelector('.prose').textContent;
+            navigator.clipboard.writeText(messageContent).then(() => {
+                showNotification('Message copied to clipboard!', 'success');
+                button.innerHTML = '<i class="fas fa-check mr-1"></i>Copied';
+                setTimeout(() => {
+                    button.innerHTML = '<i class="fas fa-copy mr-1"></i>Copy';
+                }, 2000);
+            }).catch(() => {
+                showNotification('Failed to copy message!', 'error');
+            });
+        }
+
+        function shareMessage(button) {
+            const messageContent = button.closest('.message-bubble').querySelector('.prose').textContent;
+            if (navigator.share) {
+                navigator.share({
+                    title: 'AI Response',
+                    text: messageContent
+                }).catch(() => {
+                    copyMessage(button);
+                });
+            } else {
+                copyMessage(button);
+            }
+        }
+
+        function formatMarkdown(text) {
+    // Remove any <think> blocks first
+    text = text.replace(/<think>[\s\S]*?<\/think>/g, '');
+    
+    // Headers with proper styling
+    text = text
+        .replace(/^### (.*$)/gm, '<h3 class="text-lg font-semibold mt-4 mb-2">$1</h3>')
+        .replace(/^## (.*$)/gm, '<h2 class="text-xl font-semibold mt-4 mb-2">$1</h2>')
+        .replace(/^# (.*$)/gm, '<h1 class="text-2xl font-bold mt-4 mb-2">$1</h1>');
+    
+    // Bold and Italic
+    text = text
+        .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+        .replace(/\*(.*?)\*/g, '<em>$1</em>');
+    
+    // Code blocks with syntax highlighting
+    text = text
+        .replace(/```([\s\S]*?)```/g, '<pre class="bg-gray-800 text-green-400 p-3 rounded-lg overflow-x-auto"><code>$1</code></pre>')
+        .replace(/`([^`]+)`/g, '<code class="bg-gray-200 dark:bg-gray-600 px-1 py-0.5 rounded text-sm">$1</code>');
+    
+    // Lists
+    text = text
+        .replace(/^\s*-\s(.*$)/gm, '<li class="ml-4">$1</li>')
+        .replace(/^\s*\d+\.\s(.*$)/gm, '<li class="ml-4">$1</li>');
+    
+    // Wrap consecutive list items in ul/ol
+    text = text.replace(/(<li class="ml-4">.*<\/li>)+/gs, (match) => {
+        return `<ul class="list-disc list-inside space-y-1">${match}</ul>`;
+    });
+    
+    // Blockquotes
+    text = text.replace(/^>\s(.*$)/gm, '<blockquote class="border-l-4 border-gray-400 pl-4 italic text-gray-600 dark:text-gray-300 my-2">$1</blockquote>');
+    
+    // Tables
+    const tableRegex = /(\|.*\|.*\|.*\|\n\|.*\|.*\|.*\|\n(\|.*\|.*\|.*\|\n)*)/g;
+    let tableMatch;
+    while ((tableMatch = tableRegex.exec(text)) !== null) {
+        const tableStr = tableMatch[0];
+        const rows = tableStr.trim().split('\n');
+        
+        if (rows.length >= 2) {
+            let tableHtml = '<div class="overflow-x-auto"><table class="min-w-full border-collapse">';
+            
+            // Add header row
+            const headers = rows[0].split('|').filter(col => col.trim() !== '');
+            tableHtml += '<thead><tr class="bg-gray-100 dark:bg-gray-700">';
+            headers.forEach(header => {
+                tableHtml += `<th class="px-4 py-2 text-left border border-gray-300 dark:border-gray-600">${header.trim()}</th>`;
+            });
+            tableHtml += '</tr></thead>';
+            
+            // Add body rows
+            tableHtml += '<tbody>';
+            for (let i = 1; i < rows.length; i++) {
+                const cells = rows[i].split('|').filter(col => col.trim() !== '');
+                tableHtml += '<tr class="hover:bg-gray-50 dark:hover:bg-gray-800">';
+                cells.forEach(cell => {
+                    tableHtml += `<td class="px-4 py-2 border border-gray-300 dark:border-gray-600">${cell.trim()}</td>`;
+                });
+                tableHtml += '</tr>';
+            }
+            tableHtml += '</tbody></table></div>';
+            
+            text = text.replace(tableStr, tableHtml);
+        }
+    }
+    
+    // Horizontal rules
+    text = text.replace(/---/g, '<hr class="my-4 border-gray-300 dark:border-gray-600">');
+    
+    // Paragraphs and line breaks
+    text = text
+        .replace(/\n\n/g, '</p><p class="mb-2">')
+        .replace(/\n/g, '<br>');
+    
+    // Wrap content in paragraphs if needed
+    if (!text.startsWith('<h') && !text.startsWith('<pre') && !text.startsWith('<ul') &&
+        !text.startsWith('<ol') && !text.startsWith('<blockquote') && !text.startsWith('<table') &&
+        !text.startsWith('<div')) {
+        text = `<p class="mb-2">${text}</p>`;
+    }
+    
+    return text;
+}
+        
+
+        function showNotification(message, type = 'info') {
+            const notification = document.createElement('div');
+            notification.className = `fixed top-4 right-4 z-50 px-6 py-3 rounded-xl shadow-lg transition-all duration-300 transform translate-x-full`;
+            
+            const colors = {
+                success: 'bg-green-500 text-white',
+                error: 'bg-red-500 text-white',
+                warning: 'bg-yellow-500 text-black',
+                info: 'bg-blue-500 text-white'
+            };
+            
+            const icons = {
+                success: 'fas fa-check-circle',
+                error: 'fas fa-exclamation-circle',
+                warning: 'fas fa-exclamation-triangle',
+                info: 'fas fa-info-circle'
+            };
+            
+            notification.className += ` ${colors[type]}`;
+            notification.innerHTML = `
+                <div class="flex items-center space-x-2">
+                    <i class="${icons[type]}"></i>
+                    <span>${message}</span>
+                </div>
+            `;
+            
+            document.body.appendChild(notification);
+            
+            // Animate in
+            setTimeout(() => {
+                notification.style.transform = 'translateX(0)';
+            }, 100);
+            
+            // Animate out and remove
+            setTimeout(() => {
+                notification.style.transform = 'translateX(100%)';
+                setTimeout(() => {
+                    if (notification.parentNode) {
+                        notification.parentNode.removeChild(notification);
+                    }
+                }, 300);
+            }, 3000);
+        }
+
+        // Keyboard shortcuts
+        document.addEventListener('keydown', (e) => {
+            // Enter to send message (Ctrl/Cmd + Enter for new line)
+            if (e.key === 'Enter' && !e.shiftKey && !e.ctrlKey && !e.metaKey) {
+                const activeInput = document.activeElement;
+                if (activeInput && activeInput.tagName === 'TEXTAREA') {
+                    e.preventDefault();
+                    const type = activeInput.id.replace('Input', '');
+                    sendMessage(type);
+                }
+            }
+            
+            // Escape to close current interface
+            if (e.key === 'Escape') {
+                const interfaces = ['askAIInterface', 'dictionaryAIInterface', 'guideLearningInterface'];
+                const currentInterface = interfaces.find(id => !document.getElementById(id).classList.contains('hidden'));
+                if (currentInterface) {
+                    showAIList(currentSubject);
+                }
+            }
+        });
+
+        // Paste event handling
+        document.addEventListener('paste', (e) => {
+            const activeInterface = ['askAIInterface', 'guideLearningInterface'].find(id => 
+                !document.getElementById(id).classList.contains('hidden')
+            );
+            
+            if (activeInterface) {
+                const type = activeInterface.replace('Interface', '');
+                const items = e.clipboardData.items;
+                
+                for (let i = 0; i < items.length; i++) {
+                    if (items[i].type.indexOf('image') !== -1) {
+                        e.preventDefault();
+                        const blob = items[i].getAsFile();
+                        const input = document.getElementById(`${type}PhotoInput`);
+                        const dataTransfer = new DataTransfer();
+                        dataTransfer.items.add(blob);
+                        input.files = dataTransfer.files;
+                        previewImage(type);
+                        break;
+                    }
+                }
+            }
+        });
+
+        // Make functions globally available
+        window.showCover = showCover;
+        window.showAIList = showAIList;
+        window.showAI = showAI;
+        window.sendMessage = sendMessage;
+        window.previewImage = previewImage;
+        window.clearImagePreview = clearImagePreview;
+        window.pasteImage = pasteImage;
+        window.copyMessage = copyMessage;
+        window.shareMessage = shareMessage;
+        window.toggleTheme = toggleTheme;
+        window.handleToolClick = handleToolClick;
+    </script>
+</body>
+</html>
